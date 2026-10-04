@@ -1,7 +1,7 @@
 // ChronoTune service worker: lets the app open offline and install to the home screen.
 // Own files are fetched network-first, so a new version shows up on the next launch.
 // Spotify always goes straight to the network.
-const CACHE = "chronotune-v1";
+const CACHE = "chronotune-v2";
 const SHELL = [
   "./",
   "./index.html",

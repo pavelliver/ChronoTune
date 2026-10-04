@@ -23,7 +23,7 @@
   --bg:#f5f3ef; --surface:#ffffff; --sunk:#ece8e2; --line:#e2dcd4; --ink:#1d1b18; --muted:#716a63; --faint:#a39b93;
   --stage:#1c191e; --stage-2:#2d2830; --stage-ink:#f6f2eb; --stage-muted:#978e98; --gold:#f3c34f;
   --p1:#0e8b7f; --p1-soft:#e2f2ef; --p2:#df5f27; --p2-soft:#fbeae1; --p3:#6a58d4; --p3-soft:#ece9fb; --p4:#2b7bc9; --p4-soft:#e2edf9;
-  --on-acc:#ffffff;
+  --on-acc:#ffffff; --bar:#4a4552;
   --ok:#1d8a52; --ok-soft:#e3f4ea; --bad:#c43a4b; --bad-soft:#fbe6e9; --warn:#9a6200; --warn-soft:#fbf0d9;
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
@@ -36,7 +36,7 @@
     --bg:#131215; --surface:#1c1b1f; --sunk:#262429; --line:#322f36; --ink:#efebe5; --muted:#a59e98; --faint:#6f6963;
     --stage:#29242e; --stage-2:#3a3341; --stage-ink:#f6f2eb; --stage-muted:#aaa0ad; --gold:#f3c34f;
     --p1:#33bcad; --p1-soft:#14312e; --p2:#f08853; --p2-soft:#3a2319; --p3:#9d90f2; --p3-soft:#27233f; --p4:#62a8ec; --p4-soft:#172a3e;
-    --on-acc:#111013;
+    --on-acc:#111013; --bar:#cbc4d4;
     --ok:#4cc386; --ok-soft:#14301f; --bad:#ef6d7d; --bad-soft:#3b1a20; --warn:#e5a845; --warn-soft:#352812;
     color-scheme:dark;
   }
@@ -45,7 +45,7 @@
   --bg:#131215; --surface:#1c1b1f; --sunk:#262429; --line:#322f36; --ink:#efebe5; --muted:#a59e98; --faint:#6f6963;
   --stage:#29242e; --stage-2:#3a3341; --stage-ink:#f6f2eb; --stage-muted:#aaa0ad; --gold:#f3c34f;
   --p1:#33bcad; --p1-soft:#14312e; --p2:#f08853; --p2-soft:#3a2319; --p3:#9d90f2; --p3-soft:#27233f; --p4:#62a8ec; --p4-soft:#172a3e;
-  --on-acc:#111013;
+  --on-acc:#111013; --bar:#cbc4d4;
   --ok:#4cc386; --ok-soft:#14301f; --bad:#ef6d7d; --bad-soft:#3b1a20; --warn:#e5a845; --warn-soft:#352812;
   color-scheme:dark;
 }
@@ -80,13 +80,14 @@ a{color:inherit}
 .note b{color:var(--ink);font-weight:600}
 .note p{margin:0}
 .note p+p{margin-top:6px}
-.foot{font-size:12px;color:var(--faint);text-align:center;text-wrap:balance}
+.foot{font-size:12px;color:var(--faint);text-align:center;text-wrap:balance;margin:0}
 .foot a{color:var(--muted)}
 .hint{margin:0;font-size:13px;color:var(--muted)}
 .msg{margin:0;font-size:13px;font-weight:600}
 .msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
 .acc-text{color:var(--acc)}
 .num{font-variant-numeric:tabular-nums}
+.h2{font:800 18px/1.2 var(--f-display);letter-spacing:-.01em;margin:0}
 
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:var(--r-md);padding:13px 16px;font-weight:700;font-size:15px;background:var(--ink);color:var(--bg);transition:transform .12s ease,opacity .12s}
 .btn:active{transform:scale(.985)}
@@ -131,6 +132,15 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
 .mylist .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .x{border:0;background:none;color:var(--faint);padding:2px 6px;border-radius:6px;font-size:16px;line-height:1}
 .x:hover{color:var(--bad);background:var(--sunk)}
+.alert{background:var(--warn-soft);border-radius:var(--r-md);padding:12px 14px;font-size:13.5px;line-height:1.5;color:var(--ink)}
+.alert b{color:var(--warn)}
+
+/* Resume card */
+.resume{border-color:var(--ink)}
+.resume-scores{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.resume-scores span{display:inline-flex;align-items:baseline;gap:5px}
+.resume-scores b{color:var(--acc)}
+.resume-scores i{font-style:normal;font:500 14px var(--f-mono)}
 
 /* Status bar */
 .status{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px}
@@ -138,7 +148,7 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
 .tile.active{border-color:var(--acc);background:var(--acc-soft)}
 .tile-name{font-size:13px;font-weight:700;color:var(--acc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile-score{display:flex;align-items:baseline;gap:4px;margin-top:2px;font-variant-numeric:tabular-nums}
-.tile-score b{font:800 24px/1.1 var(--f-display)}
+.tile-score b{font:800 24px/1.1 var(--f-display);display:inline-block}
 .tile-score span{font-size:13px;color:var(--faint)}
 .dots{display:flex;gap:4px;margin-top:6px}
 .dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
@@ -156,15 +166,13 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
   box-shadow:0 0 0 1px rgba(255,255,255,.07),0 10px 24px rgba(0,0,0,.35)}
 .disc::after{content:"";position:absolute;inset:33px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#0c0b0d 0 3px,transparent 3.5px),radial-gradient(circle at 50% 22%,rgba(255,255,255,.6) 0 2px,transparent 2.6px),var(--acc)}
 .disc.spin{animation:spin 2.2s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 .stage-info{display:flex;flex-direction:column;gap:2px;min-width:0}
 .eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--stage-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .s-title{font:700 21px/1.2 var(--f-display);letter-spacing:-.01em;text-wrap:balance;overflow-wrap:anywhere}
 .s-artist{font-size:14px;color:var(--stage-muted);overflow-wrap:anywhere}
-.s-year{font:500 46px/1 var(--f-mono);letter-spacing:-.03em;color:var(--stage-muted);margin-top:8px;font-variant-numeric:tabular-nums}
+.s-year{font:500 46px/1 var(--f-mono);letter-spacing:-.03em;color:var(--stage-muted);margin-top:8px;font-variant-numeric:tabular-nums;transform-origin:left center}
 .s-year.on{color:var(--gold)}
-.s-year.anim{animation:flip .5s cubic-bezier(.2,.8,.2,1)}
-@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.s-year.rolling{color:var(--stage-ink)}
 .transport{display:flex;align-items:center;gap:12px}
 .play{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--stage-ink);color:var(--stage);display:grid;place-items:center}
 .play svg{width:20px;height:20px}
@@ -182,16 +190,15 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
 .embed-box{position:relative;min-height:80px;border-radius:12px;overflow:hidden;background:var(--sunk)}
 #embedHost iframe{display:block;width:100%;height:80px;border:0}
 .connecting{height:80px;display:flex;align-items:center;padding:0 14px;font-size:13px;color:var(--muted)}
+.embed-box:has(.blocked){background:transparent;min-height:0}
+.blocked{display:block;padding:12px 14px;font-size:13px;line-height:1.45;color:var(--muted);border:1px solid var(--line);border-radius:12px}
+.blocked b{color:var(--bad)}
+.blocked a{color:var(--ink);font-weight:600}
 .mask{position:absolute;top:0;left:0;bottom:0;right:78px;background:var(--surface);border:1px solid var(--line);border-right:0;border-radius:12px 0 0 12px;display:flex;align-items:center;gap:12px;padding:0 14px;min-width:0}
 .mask .sp{flex:none;width:30px;height:30px;border-radius:50%;background:#1ed760;display:grid;place-items:center}
 .mask .sp svg{width:18px;height:18px;color:#0b0b0b}
 .mask div{min-width:0;font-size:12.5px;line-height:1.35;color:var(--muted)}
 .mask b{display:block;color:var(--ink);font-size:13px}
-.blocked{display:block;padding:12px 14px;font-size:13px;line-height:1.45;color:var(--muted);border:1px solid var(--line);border-radius:12px}
-.blocked b{color:var(--bad)}
-.blocked a{color:var(--ink);font-weight:600}
-.alert{background:var(--warn-soft);border-radius:var(--r-md);padding:12px 14px;font-size:13.5px;line-height:1.5;color:var(--ink)}
-.alert b{color:var(--warn)}
 .tools{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 
 /* Timeline */
@@ -204,10 +211,9 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
 .row .t{font-weight:600;font-size:14px;line-height:1.25;overflow-wrap:anywhere}
 .row .a{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
 .row svg{width:18px;height:18px}
-.row.new{border-color:var(--ok);background:var(--ok-soft);animation:pop .45s ease}
+.row.new{border-color:var(--ok);background:var(--ok-soft)}
 .row.new svg{color:var(--ok)}
-@keyframes pop{0%{transform:scale(.97);opacity:.4}100%{transform:none;opacity:1}}
-.slot{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;border:1.5px dashed var(--line);background:transparent;color:var(--muted);border-radius:var(--r-sm);padding:8px;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.slot{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;border:1.5px dashed var(--line);background:transparent;color:var(--muted);border-radius:var(--r-sm);padding:8px;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;transition:background .15s,color .15s,border-color .15s}
 .slot svg{width:14px;height:14px}
 .slot:hover{border-color:var(--acc);color:var(--acc)}
 .slot.sel{background:var(--acc);border-style:solid;border-color:var(--acc);color:var(--on-acc)}
@@ -223,10 +229,76 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
 .prompt{margin:0;text-align:center;font-size:14px;color:var(--muted);text-wrap:balance}
 .prompt b{color:var(--acc)}
 
+/* Game over and recap */
 .winner{text-align:center;align-items:center;padding:26px 16px;border-color:var(--acc)}
-.crown{width:48px;height:48px;border-radius:50%;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center}
-.crown svg{width:24px;height:24px}
-.winner .who{font:800 30px/1.1 var(--f-display);letter-spacing:-.02em;color:var(--acc);overflow-wrap:anywhere}
+.crown{width:52px;height:52px;border-radius:50%;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center}
+.crown svg{width:26px;height:26px}
+.winner .who{font:800 32px/1.1 var(--f-display);letter-spacing:-.02em;color:var(--acc);overflow-wrap:anywhere}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px;min-width:0}
+.stat b{display:block;font:800 24px/1.1 var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.stat small{display:block;font-size:11.5px;color:var(--faint)}
+.awards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.award{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.award:last-child:nth-child(odd){grid-column:1/-1}
+.award .who{font-weight:700;color:var(--acc);overflow-wrap:anywhere}
+.award .det{font-size:12.5px;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}
+.tablewrap{overflow-x:auto;margin-inline:-4px}
+table.recap{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+table.recap th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:right;padding:6px 6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.recap td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;vertical-align:top}
+table.recap tr:last-child td{border-bottom:0}
+table.recap th:first-child,table.recap td:first-child{text-align:left}
+table.recap .pname{color:var(--acc);font-weight:700;max-width:7.5em;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom}
+table.recap small{display:block;font-size:11.5px;color:var(--faint)}
+.decs{display:flex;flex-direction:column;gap:9px}
+.dec{display:grid;grid-template-columns:3.4rem minmax(0,1fr) 5.2rem;gap:10px;align-items:center;font-size:13px}
+.dec .lab{font:500 13px var(--f-mono);color:var(--muted)}
+.track{height:8px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--bar);border-radius:0 4px 4px 0;transform-origin:left center}
+.dec .val{text-align:right;font-variant-numeric:tabular-nums}
+.dec .val small{color:var(--faint);font-size:12px}
+.hist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.hist li{display:grid;grid-template-columns:1.6rem 3.1rem minmax(0,1fr) auto;gap:8px;align-items:start;padding:8px 2px;border-bottom:1px solid var(--line)}
+.hist li:last-child{border-bottom:0}
+.hist .n{font:500 12px/1.6 var(--f-mono);color:var(--faint)}
+.hist .yr{font:500 14px/1.4 var(--f-mono)}
+.hist .t{font-weight:600;font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+.hist .a{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.hist .res{display:flex;align-items:center;gap:5px;font-size:12.5px;margin-top:2px}
+.hist .res svg{width:13px;height:13px;flex:none}
+.hist .res.ok{color:var(--ok)} .hist .res.bad{color:var(--bad)} .hist .res.warn{color:var(--warn)}
+.hist .go{color:var(--faint);padding:2px}
+.hist .go svg{width:15px;height:15px}
+.hist .go:hover{color:var(--ink)}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+/* Motion */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pillIn{0%{opacity:0;transform:scale(.8)}70%{opacity:1;transform:scale(1.05)}100%{transform:none}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes drop{0%{opacity:0;transform:translateY(-24px) scale(.96)}60%{opacity:1;transform:translateY(3px)}100%{transform:none}}
+@keyframes bump{0%{transform:none}40%{transform:scale(1.4)}100%{transform:none}}
+@keyframes dotpop{0%{transform:scale(0)}70%{transform:scale(1.6)}100%{transform:none}}
+@keyframes land{0%{transform:scale(1.18)}100%{transform:none}}
+@keyframes crown{0%{opacity:0;transform:translateY(10px) scale(.5)}60%{opacity:1;transform:translateY(-4px) scale(1.1)}100%{transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.enter > *{animation:rise .34s cubic-bezier(.2,.8,.2,1) both}
+.enter > *:nth-child(2){animation-delay:.04s}
+.enter > *:nth-child(3){animation-delay:.08s}
+.enter > *:nth-child(4){animation-delay:.12s}
+.enter > *:nth-child(5){animation-delay:.16s}
+.enter > *:nth-child(n+6){animation-delay:.2s}
+#bottom.fresh .verdict{animation:pillIn .4s .85s both}
+#bottom.fresh .verdict .pill.bad{animation:shake .45s 1.25s}
+#bottom.fresh .row.new{animation:drop .55s 1s both}
+.tile-score b.bump{animation:bump .45s ease}
+.dots i.pop{animation:dotpop .4s ease}
+.s-year.landed{animation:land .35s ease}
+.winner .crown{animation:crown .6s .1s cubic-bezier(.2,.8,.2,1) both}
+.track i{animation:grow .8s .3s cubic-bezier(.2,.8,.2,1) both}
 
 @media (max-width:420px){
   .disc{width:84px;height:84px}
@@ -234,6 +306,7 @@ textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:transp
   .s-year{font-size:40px}
   .tile{padding:9px}
   .tile-score b{font-size:21px}
+  .stat b{font-size:21px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -285,6 +358,16 @@ const Logic = (() => {
     const lo = idx > 0 ? timeline[idx - 1].year : -Infinity;
     const hi = idx < timeline.length ? timeline[idx].year : Infinity;
     return year >= lo && year <= hi;
+  }
+
+  // How many years outside the chosen gap the song was (0 when correct),
+  // and how wide the gap was when both neighbours exist.
+  function placementError(timeline, idx, year) {
+    const lo = idx > 0 ? timeline[idx - 1].year : -Infinity;
+    const hi = idx < timeline.length ? timeline[idx].year : Infinity;
+    const err = year < lo ? lo - year : year > hi ? year - hi : 0;
+    const gap = Number.isFinite(lo) && Number.isFinite(hi) ? hi - lo : null;
+    return { err, gap };
   }
 
   function buildPool(songs, { tier = "popular", decades, custom = [], onlyCustom = false }) {
@@ -341,7 +424,71 @@ const Logic = (() => {
     return `Between ${lo} and ${hi}`;
   }
 
-  return { TIERS, decadeOf, shuffle, slotIsCorrect, buildPool, resolveTurn, parseCustom, slotText };
+  // Whoever has the best value; null when nobody qualifies or everyone ties.
+  function leader(rows, val, lowWins, nPlayers) {
+    const vals = rows.map(r => ({ i: r.i, v: val(r) })).filter(x => x.v !== null && x.v !== undefined);
+    if (!vals.length) return null;
+    const best = lowWins ? Math.min(...vals.map(x => x.v)) : Math.max(...vals.map(x => x.v));
+    const who = vals.filter(x => x.v === best).map(x => x.i);
+    if (nPlayers > 1 && who.length === nPlayers) return null;
+    return { who, value: best };
+  }
+
+  // log entry: { t:{title,artist,year,id}, p, ok, err, gap, st, stOk, ms, bonus }
+  function computeRecap(players, log) {
+    const n = players.length;
+    const per = players.map((p, i) => {
+      const own = log.filter(e => e.p === i);
+      const ok = own.filter(e => e.ok).length;
+      let best = 0, run = 0;
+      own.forEach(e => { run = e.ok ? run + 1 : 0; if (run > best) best = run; });
+      const misses = own.filter(e => !e.ok);
+      const times = own.map(e => e.ms).filter(x => typeof x === "number");
+      return {
+        i, turns: own.length, ok,
+        acc: own.length ? ok / own.length : null,
+        best,
+        avgMiss: misses.length ? misses.reduce((a, e) => a + e.err, 0) / misses.length : null,
+        stTried: log.filter(e => e.st === i).length,
+        stWon: log.filter(e => e.st === i && e.stOk).length,
+        bonus: own.filter(e => e.bonus).length,
+        avgMs: times.length >= 2 ? times.reduce((a, b) => a + b, 0) / times.length : null,
+        final: p.timeline.length,
+      };
+    });
+
+    const byDec = new Map();
+    log.forEach(e => {
+      const d = decadeOf(e.t.year);
+      const r = byDec.get(d) || { d, ok: 0, n: 0 };
+      r.n += 1; if (e.ok) r.ok += 1;
+      byDec.set(d, r);
+    });
+    const decades = [...byDec.values()].sort((a, b) => a.d - b.d);
+
+    const awards = [];
+    const add = (key, res, extra) => { if (res) awards.push({ key, ...res, ...extra }); };
+    add("acc", leader(per, r => r.turns >= 2 ? r.acc : null, false, n));
+    add("streak", leader(per, r => r.best >= 2 ? r.best : null, false, n));
+    add("thief", leader(per, r => r.stWon >= 1 ? r.stWon : null, false, n));
+    if (per.filter(r => r.avgMs !== null).length >= 2) add("quick", leader(per, r => r.avgMs, true, n));
+    add("bonus", leader(per, r => r.bonus >= 1 ? r.bonus : null, false, n));
+    const misses = log.filter(e => !e.ok && e.err >= 1);
+    if (misses.length) {
+      const e = misses.reduce((a, b) => (b.err > a.err ? b : a));
+      awards.push({ key: "miss", who: [e.p], value: e.err, entry: e });
+    }
+    const tight = log.filter(e => e.ok && e.gap !== null && e.gap <= 5);
+    if (tight.length) {
+      const e = tight.reduce((a, b) => (b.gap < a.gap ? b : a));
+      awards.push({ key: "close", who: [e.p], value: e.gap, entry: e });
+    }
+
+    const ok = log.filter(e => e.ok).length;
+    return { per, decades, awards, total: { songs: log.length, ok, acc: log.length ? ok / log.length : null } };
+  }
+
+  return { TIERS, decadeOf, shuffle, slotIsCorrect, placementError, buildPool, resolveTurn, parseCustom, slotText, computeRecap };
 })();
 if (typeof module !== "undefined") module.exports = Logic;
 </script>
@@ -354,12 +501,25 @@ const TARGETS = [5, 10, 15];
 const TIER_LABELS = [["hits", "Big hits"], ["popular", "Popular"], ["all", "Everything"]];
 const THIS_YEAR = new Date().getFullYear();
 const STORE = "chronotune.v1";
+const GAME = "chronotune.game.v1";
+const IN_GAME = ["turnIntro", "placing", "stealOffer", "stealPlacing", "reveal"];
+const WITH_CARD = ["placing", "stealOffer", "stealPlacing", "reveal"];
+const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const acc = i => `--acc:var(--p${i + 1});--acc-soft:var(--p${i + 1}-soft)`;
 const fmtN = n => n.toLocaleString("en-GB");
 const fmtT = ms => { const s = Math.max(0, Math.round((ms || 0) / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+const fmtDur = ms => {
+  const m = Math.round(ms / 60000);
+  if (ms < 60000) return `${Math.max(1, Math.round(ms / 1000))} s`;
+  if (m < 60) return `${m} min`;
+  return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")}`;
+};
+const yrs = n => `${n} yr${n === 1 ? "" : "s"}`;
+const pct = x => `${Math.round(x * 100)}%`;
+const ago = ms => { const m = Math.round(ms / 60000); return m < 1 ? "just now" : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} days ago`; };
 
 const I = {
   play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>',
@@ -372,6 +532,7 @@ const I = {
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
   crown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3.5 8.5 8 12l4-6 4 6 4.5-3.5L19 18H5L3.5 8.5Z"/></svg>',
   coin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10.5h5" stroke-linecap="round"/></svg>',
+  replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>',
 };
 
 /* ------------------------------ state ------------------------------ */
@@ -385,21 +546,28 @@ const S = {
   activeSlot: null, stealer: null, stealSlot: null, result: null,
   bonusUsed: false, revealAnimated: false, winner: null, endNote: "",
   deck: [], discard: [], quitArmed: false, installEvt: null,
+  stats: null, drawnAt: 0, decisionMs: null, beforeScores: null, popToken: null,
+  saved: null, discardArmed: false, confettiDone: false,
 };
 
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem(STORE) || "null");
-    if (!d) return;
-    if (Array.isArray(d.names)) d.names.slice(0, 4).forEach((v, i) => { if (typeof v === "string") S.names[i] = v; });
-    if ([2, 3, 4].includes(d.n)) S.n = d.n;
-    if (TARGETS.includes(d.target)) S.target = d.target;
-    if (Logic.TIERS[d.tier]) S.tier = d.tier;
-    const dec = Array.isArray(d.decades) ? d.decades.filter(x => DECADES.includes(x)) : [];
-    if (dec.length) S.decades = new Set(dec);
-    if (Array.isArray(d.custom)) S.custom = d.custom.filter(c => c && /^[A-Za-z0-9]{22}$/.test(c.id) && Number.isInteger(c.year));
-    S.onlyCustom = !!d.onlyCustom && S.custom.length > 0;
+    if (d) {
+      if (Array.isArray(d.names)) d.names.slice(0, 4).forEach((v, i) => { if (typeof v === "string") S.names[i] = v; });
+      if ([2, 3, 4].includes(d.n)) S.n = d.n;
+      if (TARGETS.includes(d.target)) S.target = d.target;
+      if (Logic.TIERS[d.tier]) S.tier = d.tier;
+      const dec = Array.isArray(d.decades) ? d.decades.filter(x => DECADES.includes(x)) : [];
+      if (dec.length) S.decades = new Set(dec);
+      if (Array.isArray(d.custom)) S.custom = d.custom.filter(c => c && /^[A-Za-z0-9]{22}$/.test(c.id) && Number.isInteger(c.year));
+      S.onlyCustom = !!d.onlyCustom && S.custom.length > 0;
+    }
   } catch (e) { /* storage unavailable: defaults are fine */ }
+  try {
+    const g = JSON.parse(localStorage.getItem(GAME) || "null");
+    if (g && g.v === 1 && Array.isArray(g.players) && g.players.length >= 2 && IN_GAME.includes(g.phase)) S.saved = g;
+  } catch (e) { /* ignore a damaged save */ }
 }
 function save() {
   try {
@@ -407,6 +575,45 @@ function save() {
   } catch (e) { /* ignore */ }
 }
 const poolOpts = () => ({ tier: S.tier, decades: S.decades, custom: S.custom, onlyCustom: S.onlyCustom });
+
+/* ---------------------- saving and resuming a game ---------------------- */
+function saveGame() {
+  if (!IN_GAME.includes(S.phase)) return;
+  try {
+    const extra = [...S.deck, ...S.discard].filter(c => c.custom);
+    localStorage.setItem(GAME, JSON.stringify({
+      v: 1, savedAt: Date.now(), phase: S.phase, target: S.target,
+      players: S.players, current: S.current, card: S.card, cardNo: S.cardNo,
+      activeSlot: S.activeSlot, stealer: S.stealer, stealSlot: S.stealSlot, result: S.result, bonusUsed: S.bonusUsed,
+      deck: S.deck.map(c => c.id), discard: S.discard.map(c => c.id), extra,
+      stats: S.stats, drawnAt: S.drawnAt, decisionMs: S.decisionMs,
+    }));
+  } catch (e) { /* storage full or blocked: the game goes on unsaved */ }
+}
+function clearGame() {
+  S.saved = null;
+  try { localStorage.removeItem(GAME); } catch (e) { /* ignore */ }
+}
+function resumeGame() {
+  const g = S.saved;
+  if (!g) return;
+  const map = new Map(SONGS.map(s => [s[3], { title: s[0], artist: s[1], year: s[2], id: s[3] }]));
+  (g.extra || []).forEach(c => map.set(c.id, c));
+  const look = ids => (ids || []).map(id => map.get(id)).filter(Boolean);
+  const stats = g.stats || { startedAt: g.savedAt, activeMs: 0, skipped: 0, log: [] };
+  stats.lastTick = Date.now();
+  Object.assign(S, {
+    phase: g.phase, target: g.target, players: g.players, current: g.current, card: g.card, cardNo: g.cardNo || 0,
+    activeSlot: g.activeSlot ?? null, stealer: g.stealer ?? null, stealSlot: g.stealSlot ?? null, result: g.result || null,
+    bonusUsed: !!g.bonusUsed, deck: look(g.deck), discard: look(g.discard),
+    stats, drawnAt: g.drawnAt || Date.now(), decisionMs: g.decisionMs ?? null,
+    revealAnimated: true, winner: null, endNote: "", saved: null, quitArmed: false,
+  });
+  if (WITH_CARD.includes(S.phase) && !S.card) S.phase = "turnIntro";
+  render();
+  window.scrollTo({ top: 0 });
+  if (WITH_CARD.includes(S.phase)) Player.load(S.card.id, false);
+}
 
 /* ------------------------------ Spotify ------------------------------ */
 const Player = {
@@ -417,7 +624,7 @@ const Player = {
       this.api = api;
       if (this.id && !this.ctrl && this.mode !== "plain" && !this.blocked) this.load(this.id, this.wantPlay);
     };
-    // A page that forbids Spotify (e.g. the claude.ai file preview) reports it here.
+    // A page that forbids Spotify reports it here.
     document.addEventListener("securitypolicyviolation", e => { if (/spotify/i.test(e.blockedURI || "")) this.markBlocked(); });
     const s = document.createElement("script");
     s.src = "https://open.spotify.com/embed/iframe-api/v1";
@@ -513,6 +720,13 @@ function paintMaskText() {
 }
 
 /* ------------------------------ flow ------------------------------ */
+function tick() {
+  if (!S.stats) return;
+  const now = Date.now();
+  S.stats.activeMs += Math.min(Math.max(0, now - (S.stats.lastTick || now)), 5 * 60000);
+  S.stats.lastTick = now;
+}
+
 function startGame() {
   const pool = Logic.buildPool(SONGS, poolOpts());
   if (pool.length < S.n + 10) {
@@ -525,7 +739,13 @@ function startGame() {
     timeline: [deck.pop()],
     tokens: START_TOKENS,
   }));
-  Object.assign(S, { deck, discard: [], current: Math.floor(Math.random() * S.n), cardNo: 0, card: null, result: null, winner: null, endNote: "", setupMsg: "", quitArmed: false, phase: "turnIntro" });
+  const now = Date.now();
+  Object.assign(S, {
+    deck, discard: [], current: Math.floor(Math.random() * S.n), cardNo: 0, card: null, result: null,
+    winner: null, endNote: "", setupMsg: "", quitArmed: false, saved: null, confettiDone: false,
+    stats: { startedAt: now, activeMs: 0, lastTick: now, skipped: 0, log: [] },
+    phase: "turnIntro",
+  });
   save();
   render();
   window.scrollTo({ top: 0 });
@@ -534,7 +754,7 @@ function startGame() {
 function drawCard() {
   if (!S.deck.length) { S.deck = Logic.shuffle(S.discard); S.discard = []; }
   if (!S.deck.length) return endByExhaustion();
-  Object.assign(S, { card: S.deck.pop(), activeSlot: null, stealer: null, stealSlot: null, result: null, bonusUsed: false, revealAnimated: false, phase: "placing" });
+  Object.assign(S, { card: S.deck.pop(), activeSlot: null, stealer: null, stealSlot: null, result: null, bonusUsed: false, revealAnimated: false, drawnAt: Date.now(), decisionMs: null, phase: "placing" });
   S.cardNo += 1;
   render();
   Player.load(S.card.id, true);
@@ -542,21 +762,32 @@ function drawCard() {
 
 function skipCard() {
   S.discard.push(S.card);
+  if (S.stats) S.stats.skipped += 1;
   drawCard();
 }
 
 function lockIn() {
   if (S.activeSlot === null) return;
+  const d = Date.now() - S.drawnAt;
+  S.decisionMs = d > 0 && d <= 5 * 60000 ? d : null;
   const anyStealer = S.players.some((p, i) => i !== S.current && p.tokens > 0);
   if (anyStealer) { S.phase = "stealOffer"; render(); }
   else resolve();
 }
 
 function resolve() {
-  const r = Logic.resolveTurn(S.players, S.current, S.card, S.activeSlot, S.stealer, S.stealSlot);
+  const cur = S.current, card = S.card;
+  const { err, gap } = Logic.placementError(S.players[cur].timeline, S.activeSlot, card.year);
+  S.beforeScores = S.players.map(p => p.timeline.length);
+  const r = Logic.resolveTurn(S.players, cur, card, S.activeSlot, S.stealer, S.stealSlot);
   S.players = r.players;
   S.result = r.outcome;
-  if (r.outcome.kind === "discarded") S.discard.push(S.card);
+  if (r.outcome.kind === "discarded") S.discard.push(card);
+  if (S.stats) S.stats.log.push({
+    t: { title: card.title, artist: card.artist, year: card.year, id: card.id },
+    p: cur, ok: r.outcome.kind === "kept", err, gap,
+    st: S.stealer, stOk: r.outcome.kind === "stolen", ms: S.decisionMs, bonus: false,
+  });
   S.phase = "reveal";
   render();
 }
@@ -564,9 +795,20 @@ function resolve() {
 function nextTurn() {
   Player.stop();
   const w = S.players.findIndex(p => p.timeline.length >= S.target);
-  if (w !== -1) { S.winner = w; S.phase = "gameover"; return render(); }
+  if (w !== -1) return finish(w, "");
   S.current = (S.current + 1) % S.players.length;
   S.phase = "turnIntro";
+  render();
+  window.scrollTo({ top: 0 });
+}
+
+function finish(w, note) {
+  tick();
+  S.winner = w;
+  S.endNote = note;
+  S.phase = "gameover";
+  S.confettiDone = false;
+  clearGame();
   render();
   window.scrollTo({ top: 0 });
 }
@@ -574,29 +816,82 @@ function nextTurn() {
 function endByExhaustion() {
   let best = 0;
   S.players.forEach((p, i) => { if (p.timeline.length > S.players[best].timeline.length) best = i; });
-  S.winner = best;
-  S.endNote = "The deck ran out, so the longest timeline wins.";
-  S.phase = "gameover";
-  render();
+  finish(best, "The deck ran out, so the longest timeline wins.");
+}
+
+/* ------------------------------ motion helpers ------------------------------ */
+function rollYear(el, final) {
+  if (!el) return;
+  const done = () => { el.textContent = final; el.classList.remove("rolling"); el.classList.add("on", "landed"); el.setAttribute("aria-label", "Released " + final); };
+  if (reduced()) return done();
+  const t0 = performance.now(), dur = 850;
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur);
+    if (k >= 1) return done();
+    const spread = Math.round(45 * (1 - k) * (1 - k)) + 1;
+    const y = Math.min(THIS_YEAR, Math.max(1950, final + Math.round((Math.random() * 2 - 1) * spread)));
+    el.textContent = y;
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function confetti(winner) {
+  if (reduced()) return;
+  const css = getComputedStyle(document.documentElement);
+  const colors = [`--p${winner + 1}`, "--gold", "--p1", "--p2", "--p3", "--p4"].map(v => css.getPropertyValue(v).trim()).filter(Boolean);
+  colors.unshift(colors[0], colors[0]);
+  const c = document.createElement("canvas");
+  c.className = "confetti";
+  c.setAttribute("aria-hidden", "true");
+  document.body.appendChild(c);
+  const dpr = window.devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  c.width = W * dpr; c.height = H * dpr;
+  const ctx = c.getContext("2d");
+  ctx.scale(dpr, dpr);
+  const parts = Array.from({ length: 140 }, () => ({
+    x: W / 2 + (Math.random() - 0.5) * Math.min(W, 520) * 0.4, y: H * 0.22,
+    vx: (Math.random() - 0.5) * 10, vy: -Math.random() * 10 - 4,
+    r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.35,
+    w: 6 + Math.random() * 6, h: 3 + Math.random() * 4,
+    col: colors[Math.floor(Math.random() * colors.length)],
+  }));
+  const t0 = performance.now(), life = 2800;
+  const frame = now => {
+    const t = now - t0;
+    ctx.clearRect(0, 0, W, H);
+    parts.forEach(p => {
+      p.vy += 0.24; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.globalAlpha = Math.max(0, 1 - t / life);
+      ctx.fillStyle = p.col;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    if (t < life) requestAnimationFrame(frame); else c.remove();
+  };
+  requestAnimationFrame(frame);
 }
 
 /* ------------------------------ views ------------------------------ */
-function statusHTML() {
+function statusHTML(scores = null, bump = []) {
   return `<div class="status" style="--n:${S.players.length}">` + S.players.map((p, i) => {
     const active = i === S.current && S.phase !== "gameover";
-    const dots = Array.from({ length: MAX_TOKENS }, (_, t) => `<i class="${t < p.tokens ? "on" : ""}"></i>`).join("");
+    const score = scores ? scores[i] : p.timeline.length;
+    const dots = Array.from({ length: MAX_TOKENS }, (_, t) => `<i class="${t < p.tokens ? "on" : ""}${S.popToken === i && t === p.tokens - 1 ? " pop" : ""}"></i>`).join("");
     return `<div class="tile${active ? " active" : ""}" style="${acc(i)}">
       <div class="tile-name">${esc(p.name)}</div>
-      <div class="tile-score"><b>${p.timeline.length}</b><span>/ ${S.target}</span></div>
+      <div class="tile-score"><b class="${bump.includes(i) ? "bump" : ""}">${score}</b><span>/ ${S.target}</span></div>
       <div class="dots" title="${p.tokens} token${p.tokens === 1 ? "" : "s"}" aria-label="${p.tokens} tokens">${dots}</div>
     </div>`;
   }).join("") + "</div>";
 }
 
-function stageHTML() {
+function stageHTML(fresh = false) {
   const c = S.card, rev = S.phase === "reveal";
-  const anim = rev && !S.revealAnimated ? " anim" : "";
-  if (rev) S.revealAnimated = true;
+  const yearCls = rev ? (fresh ? " rolling" : " on") : "";
+  const yearTxt = rev && !fresh ? c.year : "????";
   return `<section class="stage" style="${acc(S.current)}">
     <div class="stage-top">
       <div class="disc${Player.paused ? "" : " spin"}" id="disc" aria-hidden="true"></div>
@@ -604,7 +899,7 @@ function stageHTML() {
         <div class="eyebrow">Song ${S.cardNo} · ${esc(S.players[S.current].name)}’s turn</div>
         <div class="s-title">${rev ? esc(c.title) : "Mystery song"}</div>
         <div class="s-artist">${rev ? esc(c.artist) : "Title, artist and year stay hidden until the reveal"}</div>
-        <div class="s-year${rev ? " on" : ""}${anim}" aria-label="${rev ? "Released " + c.year : "Year hidden"}">${rev ? c.year : "????"}</div>
+        <div class="s-year${yearCls}" id="sYear" aria-label="${rev && !fresh ? "Released " + c.year : "Year hidden"}">${yearTxt}</div>
       </div>
     </div>
     <div class="transport" id="transport">
@@ -616,7 +911,7 @@ function stageHTML() {
   </section>`;
 }
 
-function timelineHTML(pi, { interactive = false, selected = null, highlight = null } = {}) {
+function timelineHTML(pi, { interactive = false, selected = null, highlight = null, bare = false } = {}) {
   const p = S.players[pi], tl = p.timeline;
   const slot = i => !interactive ? "" :
     `<button class="slot${selected === i ? " sel" : ""}" data-act="slot" data-i="${i}" aria-pressed="${selected === i}">${selected === i ? I.check : I.plus}${Logic.slotText(tl, i)}</button>`;
@@ -625,9 +920,22 @@ function timelineHTML(pi, { interactive = false, selected = null, highlight = nu
     const isNew = highlight === i;
     rows += `<div class="row${isNew ? " new" : ""}"><span class="yr">${c.year}</span><span class="meta"><span class="t">${esc(c.title)}</span><span class="a">${esc(c.artist)}</span></span>${isNew ? I.check : ""}</div>` + slot(i + 1);
   });
+  if (bare) return `<div class="tl-body" style="${acc(pi)}">${rows}</div>`;
   return `<section class="card tl" style="${acc(pi)}">
     <div class="tl-head"><span class="label acc-text">${esc(p.name)}’s timeline</span><span class="label num">${tl.length} / ${S.target}</span></div>
     <div class="tl-body">${rows}</div>
+  </section>`;
+}
+
+function resumeHTML() {
+  const g = S.saved;
+  if (!g) return "";
+  const scores = g.players.map((p, i) => `<span style="${acc(i)}"><b>${esc(p.name)}</b><i>${p.timeline.length}</i></span>`).join("");
+  return `<section class="card resume">
+    <div class="tl-head"><span class="h2">Game in progress</span><span class="label">Saved ${ago(Date.now() - g.savedAt)}</span></div>
+    <div class="resume-scores">${scores}<span class="hint">· first to ${g.target}</span></div>
+    <button class="btn" data-act="resume">${I.replay} Resume game</button>
+    <button class="linkbtn${S.discardArmed ? " armed" : ""}" data-act="discardSave">${S.discardArmed ? "Tap again to delete this game" : "Delete this game"}</button>
   </section>`;
 }
 
@@ -653,6 +961,7 @@ function setupHTML() {
 
   return `
   ${Player.blocked ? `<div class="alert"><b>No sound right now.</b> Spotify can’t load. Check your internet connection, then reload the page.</div>` : ""}
+  ${resumeHTML()}
   <p class="lede">Hear a song, place it in time. First to ${S.target} songs in the right order wins.</p>
 
   <section class="card">
@@ -686,31 +995,127 @@ function setupHTML() {
   </div>
 
   ${S.setupMsg ? `<p class="msg bad" style="text-align:center">${esc(S.setupMsg)}</p>` : ""}
-  <button class="btn" data-act="start" ${pool.length ? "" : "disabled"}>Start game ${I.arrow}</button>
+  <button class="btn" data-act="start" ${pool.length ? "" : "disabled"}>${S.saved ? "Start a new game" : "Start game"} ${I.arrow}</button>
   ${installHTML()}
   <p class="foot">Song list and original release years from the open-source <a href="https://github.com/sjmarais9/hitster" target="_blank" rel="noopener">sjmarais9/hitster</a> deck, cross-checked against MusicBrainz.</p>`;
 }
 
+function recapHTML() {
+  const P = S.players, w = S.winner;
+  const st = S.stats || { log: [], activeMs: 0, skipped: 0 };
+  const R = Logic.computeRecap(P, st.log);
+  const names = who => who.map(i => `<span style="${acc(i)}" class="acc-text">${esc(P[i].name)}</span>`).join(" & ");
+  const songLine = e => `“${esc(e.t.title)}” (${e.t.year})`;
+
+  const tiles = `<div class="tiles">
+    <div class="stat"><b>${fmtDur(st.activeMs || 0)}</b><span>Game time</span></div>
+    <div class="stat"><b>${R.total.songs}</b><span>Songs played</span>${st.skipped ? `<small>+${st.skipped} skipped</small>` : ""}</div>
+    <div class="stat"><b>${R.total.acc === null ? "—" : pct(R.total.acc)}</b><span>Placed right</span></div>
+  </div>`;
+
+  const AW = {
+    acc: a => ["Sharpest ear", `${pct(a.value)} of their songs placed right`],
+    streak: a => ["Longest streak", `${a.value} right in a row`],
+    thief: a => ["Master thief", `${a.value} successful steal${a.value === 1 ? "" : "s"}`],
+    quick: a => ["Quick draw", `${Math.max(1, Math.round(a.value / 1000))} s per decision on average`],
+    bonus: a => ["Name that tune", `${a.value} bonus token${a.value === 1 ? "" : "s"} for title and artist`],
+    miss: a => ["Time traveller", `${songLine(a.entry)} placed ${yrs(a.value)} off`],
+    close: a => ["Closest call", `${songLine(a.entry)} fit a ${a.value === 0 ? "same-year" : a.value + "-year"} gap`],
+  };
+  const awards = R.awards.length ? `<section class="card">
+    <span class="label">Awards</span>
+    <div class="awards">${R.awards.map(a => { const [t, d] = AW[a.key](a); return `<div class="award"><span class="label">${t}</span><span class="who">${names(a.who)}</span><span class="det">${d}</span></div>`; }).join("")}</div>
+  </section>` : "";
+
+  const rows = R.per.slice().sort((a, b) => b.final - a.final || (b.acc || 0) - (a.acc || 0)).map(r => `<tr style="${acc(r.i)}">
+      <td><span class="pname">${esc(P[r.i].name)}</span><small>${r.final} on timeline</small></td>
+      <td>${r.acc === null ? "—" : pct(r.acc)}<small>${r.ok} of ${r.turns}</small></td>
+      <td>${r.best}</td>
+      <td>${r.stTried ? `${r.stWon} / ${r.stTried}` : "—"}</td>
+      <td>${r.avgMiss === null ? "—" : "±" + yrs(Math.round(r.avgMiss))}</td>
+    </tr>`).join("");
+  const table = `<section class="card">
+    <span class="label">Players</span>
+    <div class="tablewrap"><table class="recap">
+      <thead><tr><th scope="col">Player</th><th scope="col">Right</th><th scope="col">Streak</th><th scope="col">Steals</th><th scope="col">Avg miss</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p class="hint">Steals: won / tried. Avg miss: how far off the wrong placements were.</p>
+  </section>`;
+
+  let decs = "";
+  if (R.decades.length) {
+    const ranked = R.decades.filter(d => d.n >= 2).sort((a, b) => a.ok / a.n - b.ok / b.n);
+    const hardest = ranked.length >= 2 && ranked[0].ok / ranked[0].n < ranked[ranked.length - 1].ok / ranked[ranked.length - 1].n ? ranked[0] : null;
+    decs = `<section class="card">
+      <div class="tl-head"><span class="label">Placed right, by decade</span>${hardest ? `<span class="hint">Hardest: ${hardest.d}s</span>` : ""}</div>
+      <div class="decs">${R.decades.map(d => {
+        const a = d.ok / d.n;
+        return `<div class="dec" title="${d.d}s: ${d.ok} of ${d.n} placed right (${pct(a)})"><span class="lab">${d.d}s</span><span class="track"><i style="width:${Math.max(a * 100, 0)}%"></i></span><span class="val">${pct(a)} <small>${d.ok}/${d.n}</small></span></div>`;
+      }).join("")}</div>
+    </section>`;
+  }
+
+  const hist = st.log.length ? `<details class="card">
+    <summary>All songs played <span class="badge">${st.log.length}</span></summary>
+    <ol class="hist">${st.log.map((e, k) => {
+      const who = esc(P[e.p].name), thief = e.st !== null && e.st !== undefined ? esc(P[e.st].name) : null;
+      let cls, icon, text;
+      if (e.ok) { cls = "ok"; icon = I.check; text = `${who} placed it right${thief ? ` · ${thief} spent a token` : ""}`; }
+      else if (e.stOk) { cls = "warn"; icon = I.swap; text = `${who} missed by ${yrs(e.err)} · ${thief} stole it`; }
+      else { cls = "bad"; icon = I.x; text = `${who} missed by ${yrs(e.err)}${thief ? ` · ${thief}’s steal missed too` : ""}`; }
+      return `<li><span class="n">${k + 1}</span><span class="yr">${e.t.year}</span>
+        <div><span class="t">${esc(e.t.title)}</span><span class="a"> · ${esc(e.t.artist)}</span><div class="res ${cls}">${icon}${text}</div></div>
+        <a class="go" href="https://open.spotify.com/track/${e.t.id}" target="_blank" rel="noopener" aria-label="Open ${esc(e.t.title)} in Spotify">${I.ext}</a></li>`;
+    }).join("")}</ol>
+  </details>` : "";
+
+  const tl = P[w].timeline;
+  const winTl = `<details class="card" style="${acc(w)}">
+    <summary>${esc(P[w].name)}’s winning timeline <span class="badge">${tl.length}</span></summary>
+    ${timelineHTML(w, { bare: true })}
+  </details>`;
+
+  return `
+    <section class="card winner" style="${acc(w)}">
+      <span class="crown">${I.crown}</span>
+      <div class="who">${esc(P[w].name)} wins</div>
+      <span class="hint">${S.endNote ? esc(S.endNote) + " " : ""}${tl.length} songs from ${tl[0].year} to ${tl[tl.length - 1].year}.</span>
+    </section>
+    ${tiles}
+    ${awards}
+    ${table}
+    ${decs}
+    ${hist}
+    ${winTl}
+    <button class="btn" data-act="rematch">${I.replay} Rematch</button>
+    <button class="btn ghost" data-act="again">Change players or settings</button>`;
+}
+
+let lastPhase = null;
 function render() {
-  keepAwake(S.phase !== "setup");
+  tick();
+  keepAwake(IN_GAME.includes(S.phase));
   const top = $("#top"), bottom = $("#bottom");
-  const playing = ["placing", "stealOffer", "stealPlacing", "reveal"].includes(S.phase);
+  const changed = S.phase !== lastPhase;
+  lastPhase = S.phase;
+  const playing = WITH_CARD.includes(S.phase);
   $("#playerWrap").hidden = !playing;
   $("#mask").hidden = S.phase === "reveal" || Player.blocked;
   const quit = $("#quit");
   quit.hidden = S.phase === "setup";
   quit.textContent = S.quitArmed ? "Tap again to end" : (S.phase === "gameover" ? "New game" : "End game");
   quit.classList.toggle("armed", S.quitArmed);
+  top.classList.toggle("enter", changed && ["setup", "turnIntro", "gameover"].includes(S.phase));
+  bottom.classList.toggle("enter", changed && ["placing", "stealOffer", "stealPlacing"].includes(S.phase));
+  bottom.classList.remove("fresh");
   bottom.innerHTML = "";
 
   const P = S.players, cur = S.current;
 
   if (S.phase === "setup") {
     top.innerHTML = setupHTML();
-    return;
-  }
-
-  if (S.phase === "turnIntro") {
+  } else if (S.phase === "turnIntro") {
     top.innerHTML = statusHTML() + `
       <section class="card handoff" style="${acc(cur)}">
         <span class="label">Pass the device to</span>
@@ -719,10 +1124,7 @@ function render() {
       </section>
       <button class="btn acc" style="${acc(cur)}" data-act="draw">Draw a song ${I.arrow}</button>
       ${timelineHTML(cur)}`;
-    return;
-  }
-
-  if (S.phase === "placing") {
+  } else if (S.phase === "placing") {
     top.innerHTML = statusHTML() + stageHTML();
     bottom.innerHTML = `
       <div class="tools"><p class="prompt"><b style="${acc(cur)}">${esc(P[cur].name)}</b>, where does it go?</p>
@@ -730,10 +1132,7 @@ function render() {
       ${timelineHTML(cur, { interactive: true, selected: S.activeSlot })}
       <button class="btn acc" style="${acc(cur)}" data-act="lock" ${S.activeSlot === null ? "disabled" : ""}>Lock in ${I.check}</button>`;
     paintTransport();
-    return;
-  }
-
-  if (S.phase === "stealOffer") {
+  } else if (S.phase === "stealOffer") {
     const where = Logic.slotText(P[cur].timeline, S.activeSlot).toLowerCase();
     const options = P.map((p, i) => (i !== cur && p.tokens > 0)
       ? `<button class="btn acc" style="${acc(i)}" data-act="steal" data-i="${i}">${I.swap} ${esc(p.name)} steals <span class="num">(${p.tokens} token${p.tokens === 1 ? "" : "s"})</span></button>` : "").join("");
@@ -746,10 +1145,7 @@ function render() {
       ${options}
       <button class="btn ghost" data-act="nosteal">No steal, reveal the year</button>`;
     paintTransport();
-    return;
-  }
-
-  if (S.phase === "stealPlacing") {
+  } else if (S.phase === "stealPlacing") {
     const st = S.stealer;
     top.innerHTML = statusHTML() + stageHTML();
     bottom.innerHTML = `
@@ -758,11 +1154,10 @@ function render() {
       <button class="btn acc" style="${acc(st)}" data-act="lockSteal" ${S.stealSlot === null ? "disabled" : ""}>Lock in steal ${I.check}</button>
       <button class="btn ghost" data-act="cancelSteal">Cancel steal</button>`;
     paintTransport();
-    return;
-  }
-
-  if (S.phase === "reveal") {
+  } else if (S.phase === "reveal") {
     const r = S.result, c = S.card;
+    const fresh = !S.revealAnimated;
+    S.revealAnimated = true;
     let pill, line, tl;
     if (r.kind === "kept") {
       pill = `<span class="pill ok">${I.check} ${esc(P[cur].name)} keeps it</span>`;
@@ -779,27 +1174,30 @@ function render() {
       tl = timelineHTML(cur);
     }
     const canBonus = !S.bonusUsed && P[cur].tokens < MAX_TOKENS;
-    top.innerHTML = statusHTML() + stageHTML();
+    const before = fresh && S.beforeScores ? S.beforeScores : null;
+    top.innerHTML = statusHTML(before) + stageHTML(fresh);
     bottom.innerHTML = `
       <div class="verdict">${pill}<p>${line}</p></div>
       ${tl}
       <button class="btn ghost" data-act="bonus" ${canBonus ? "" : "disabled"}>${I.coin} ${S.bonusUsed ? `Bonus token given to ${esc(P[cur].name)}` : (P[cur].tokens >= MAX_TOKENS ? `${esc(P[cur].name)} has the maximum ${MAX_TOKENS} tokens` : `${esc(P[cur].name)} named title and artist: +1 token`)}</button>
       <button class="btn" data-act="next">Continue ${I.arrow}</button>`;
+    if (fresh) {
+      bottom.classList.add("fresh");
+      rollYear($("#sYear"), c.year);
+      const changedIdx = before ? P.map((p, i) => (p.timeline.length > before[i] ? i : -1)).filter(i => i >= 0) : [];
+      setTimeout(() => {
+        const stEl = $(".status");
+        if (stEl && S.phase === "reveal") stEl.outerHTML = statusHTML(null, changedIdx);
+      }, reduced() ? 0 : 1000);
+    }
     paintTransport();
-    return;
+  } else if (S.phase === "gameover") {
+    top.innerHTML = recapHTML();
+    if (!S.confettiDone) { S.confettiDone = true; setTimeout(() => confetti(S.winner), 150); }
   }
 
-  if (S.phase === "gameover") {
-    const w = S.winner;
-    top.innerHTML = `
-      <section class="card winner" style="${acc(w)}">
-        <span class="crown">${I.crown}</span>
-        <div class="who">${esc(P[w].name)} wins</div>
-        <span class="hint">${S.endNote ? esc(S.endNote) + " " : ""}A timeline of ${P[w].timeline.length} songs, ${P[w].timeline[0].year} to ${P[w].timeline[P[w].timeline.length - 1].year}.</span>
-      </section>
-      ${timelineHTML(w)}
-      <button class="btn" data-act="again">Play again</button>`;
-  }
+  S.popToken = null;
+  saveGame();
 }
 
 /* ------------------------------ events ------------------------------ */
@@ -809,6 +1207,7 @@ document.addEventListener("click", e => {
   const act = b.dataset.act, v = b.dataset.v, i = +b.dataset.i;
   if (act !== "quit" && S.quitArmed) { S.quitArmed = false; }
   if (act !== "clearCustom") S.clearArmed = false;
+  if (act !== "discardSave") S.discardArmed = false;
   switch (act) {
     case "n": S.n = +v; S.setupMsg = ""; save(); return render();
     case "target": S.target = +v; save(); return render();
@@ -833,7 +1232,12 @@ document.addEventListener("click", e => {
     case "clearCustom":
       if (!S.clearArmed) { S.clearArmed = true; return render(); }
       S.custom = []; S.onlyCustom = false; S.clearArmed = false; S.customMsg = { ok: true, text: "Your songs were removed." }; save(); return render();
+    case "resume": return resumeGame();
+    case "discardSave":
+      if (!S.discardArmed) { S.discardArmed = true; return render(); }
+      S.discardArmed = false; clearGame(); return render();
     case "start": return startGame();
+    case "rematch": return startGame();
     case "install":
       if (S.installEvt) { S.installEvt.prompt(); S.installEvt.userChoice.finally(() => { S.installEvt = null; render(); }); }
       return;
@@ -849,14 +1253,20 @@ document.addEventListener("click", e => {
     case "nosteal": S.stealer = null; S.stealSlot = null; return resolve();
     case "lockSteal": if (S.stealSlot !== null) resolve(); return;
     case "bonus":
-      if (!S.bonusUsed && S.players[S.current].tokens < MAX_TOKENS) { S.players[S.current].tokens += 1; S.bonusUsed = true; }
+      if (!S.bonusUsed && S.players[S.current].tokens < MAX_TOKENS) {
+        S.players[S.current].tokens += 1;
+        S.bonusUsed = true;
+        S.popToken = S.current;
+        const last = S.stats && S.stats.log[S.stats.log.length - 1];
+        if (last) last.bonus = true;
+      }
       return render();
     case "next": return nextTurn();
     case "again": Player.stop(); S.phase = "setup"; render(); return window.scrollTo({ top: 0 });
     case "quit":
       if (S.phase === "gameover") { S.phase = "setup"; return render(); }
       if (!S.quitArmed) { S.quitArmed = true; return render(); }
-      S.quitArmed = false; Player.stop(); S.phase = "setup"; render(); return window.scrollTo({ top: 0 });
+      S.quitArmed = false; Player.stop(); clearGame(); S.phase = "setup"; render(); return window.scrollTo({ top: 0 });
   }
 });
 
@@ -888,7 +1298,11 @@ async function keepAwake(on) {
     }
   } catch (e) { /* not supported or refused: the game still works */ }
 }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") keepAwake(S.phase !== "setup"); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") keepAwake(IN_GAME.includes(S.phase));
+  else { tick(); saveGame(); }
+});
+window.addEventListener("pagehide", () => { tick(); saveGame(); });
 
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
